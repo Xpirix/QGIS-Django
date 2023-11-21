@@ -10,7 +10,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from olwidget.fields import EditableLayerField, MapField
 from olwidget.widgets import EditableLayer, InfoLayer, InfoMap, Map
 from users.forms import *
