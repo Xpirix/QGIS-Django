@@ -1,7 +1,7 @@
 #--------- Generic stuff all our Dockerfiles should start with so we get caching ------------
-FROM debian:bookworm
-
-ENV PYTHONUNBUFFERED 1
+# Note this base image is based on debian
+FROM kartoza/django-base:3.8
+MAINTAINER Dimas Ciputra<dimas@kartoza.com>
 
 #RUN  ln -s /bin/true /sbin/initctl
 RUN apt-get clean all
@@ -9,24 +9,10 @@ RUN apt-get clean all
 # Debian stretch/updates release issue. please see https://serverfault.com/a/1130167
 # RUN echo "deb http://archive.debian.org/debian stretch main contrib non-free" > /etc/apt/sources.list
 
-RUN apt-get update && apt-get install -y \
-    libsasl2-dev \
-    python-dev-is-python3 \
-    libldap2-dev \
-    libssl-dev \
-    nano \
-    sed  \
-    curl \
-    git \
-    wget \
-    gnupg2 \
-    python3-pip \
-    gdal-bin
-
+RUN apt-get update && apt-get install -y libsasl2-dev python-dev-is-python3 libldap2-dev libssl-dev
 ADD REQUIREMENTS.txt /REQUIREMENTS.txt
-RUN alias python=python3
-RUN pip install -r /REQUIREMENTS.txt --break-system-packages
-RUN pip install uwsgi --break-system-packages
+RUN pip install -r /REQUIREMENTS.txt
+RUN pip install uwsgi
 
 # https://docs.docker.com/examples/running_ssh_service/
 # Sudo is needed by pycharm when it tries to pip install packages
