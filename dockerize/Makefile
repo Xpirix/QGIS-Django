@@ -55,7 +55,7 @@ devweb: db
 	@echo "------------------------------------------------------------------"
 	@echo "Running in DEVELOPMENT mode"
 	@echo "------------------------------------------------------------------"
-	@docker-compose -p $(PROJECT_ID) up --no-deps -d devweb rabbitmq worker beat
+	@docker-compose -p $(PROJECT_ID) up --no-deps -d devweb rabbitmq worker beat frontend
 
 devweb-runserver: devweb
 	@echo

@@ -75,6 +75,14 @@ services:
       # for ssh
       - "62203:22"
 
+  frontend:
+    container_name: qgis-plugins-frontend
+    build: ../frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../frontend:/home/web/react_project
+
   rabbitmq:
     image: rabbitmq:3.7-alpine
     hostname: rabbitmq
