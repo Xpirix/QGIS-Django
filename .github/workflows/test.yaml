@@ -55,9 +55,9 @@ jobs:
 
       - name: Run test
         run: |
-          docker-compose exec -T devweb bash python manage.py makemigrations
-          docker-compose exec -T devweb bash python manage.py migrate
-          docker-compose exec -T devweb bash python manage.py test
+          docker-compose exec -T devweb python manage.py makemigrations
+          docker-compose exec -T devweb python manage.py migrate
+          docker-compose exec -T devweb python manage.py test
           exit_code=$?
           docker-compose down
           exit $exit_code
