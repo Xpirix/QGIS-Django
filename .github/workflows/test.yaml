@@ -53,19 +53,13 @@ jobs:
       - name: Run the containers
         run: docker-compose up -d db devweb
 
-      - name: Run Coverage test
+      - name: Run test
         run: |
-          cat << EOF | docker-compose exec -T devweb bash
-          pip install coverage
-          python manage.py makemigrations
-          python manage.py migrate
-          coverage run manage.py test
-          coverage xml
-          EOF
+          docker-compose exec -T devweb bash python manage.py makemigrations
+          docker-compose exec -T devweb bash python manage.py migrate
+          docker-compose exec -T devweb bash python manage.py test
+          exit_code=$?
+          docker-compose down
+          exit $exit_code
 
-      - name: Upload coverage to codecov
-        uses: codecov/codecov-action@v4
-        with:
-          fail_ci_if_error: true
-          files: ./coverage.xml
-          token: ${{ secrets.CODECOV_TOKEN }}
+
