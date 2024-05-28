@@ -1541,8 +1541,6 @@ def version_download(request, package_name, version):
 
     download_record, created = PluginVersionDownload.objects.get_or_create(
         plugin_version = version, 
-        country_code = country_code,
-        country_name = country_name,
         download_date = now().date(), 
         defaults = {'download_count': 1}
     )
@@ -1550,7 +1548,10 @@ def version_download(request, package_name, version):
         download_record.download_count = (
             download_record.download_count + 1
         )
-        download_record.save()
+    else:
+        download_record.country_code = country_code
+        download_record.country_name = country_name
+    download_record.save()
 
     if not version.package.file.file.closed:
         version.package.file.file.close()
