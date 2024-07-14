@@ -203,6 +203,16 @@ services:
     command: certonly --webroot --webroot-path=/var/www/webroot --email admin@qgis.org --agree-tos --no-eff-email --force-renewal -d plugins.qgis.org
     networks:
       internal:
+  
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: qgis-plugins-frontend
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
 
 networks:
     internal:
